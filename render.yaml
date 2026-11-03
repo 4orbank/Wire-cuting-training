@@ -1,0 +1,26 @@
+services:
+  # ---------- API (Node/Express + game-logic) ----------
+  - type: web
+    name: wire-trainer-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start:api
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: CORS_ORIGINS        # ใส่ URL ของ web เช่น https://wire-trainer-web.onrender.com
+        sync: false
+
+  # ---------- WEB (Vue + Vite, static site) ----------
+  - type: web
+    name: wire-trainer-web
+    runtime: static
+    buildCommand: npm install && npm run build:web
+    staticPublishPath: web/dist
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: VITE_API_URL        # ใส่ URL ของ api เช่น https://wire-trainer-api.onrender.com
+        sync: false

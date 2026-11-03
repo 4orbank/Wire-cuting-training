@@ -1,0 +1,17 @@
+{
+  "name": "wire-cutting-trainer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "เกมฝึกตัดสายไฟ (training) แยก web / api / game-logic",
+  "engines": { "node": ">=20" },
+  "workspaces": ["packages/game-logic", "api", "web"],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev -w api",
+    "dev:web": "npm run dev -w web",
+    "start:api": "npm run start -w api",
+    "build:web": "npm run build -w web",
+    "test": "npm test -w @wire/game-logic && npm test -w api"
+  },
+  "devDependencies": { "concurrently": "^9.1.0" }
+}
